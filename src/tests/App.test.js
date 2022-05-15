@@ -25,4 +25,11 @@ describe('Test App.js', () => {
       expect(pathname).toBe(LINK_PATH[i]);
     });
   });
+
+  test('05- Check if the not found page works', () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/GEN98');
+    const notFoundText = screen.getByText(/Page requested not found/);
+    expect(notFoundText).toBeInTheDocument();
+  });
 });
