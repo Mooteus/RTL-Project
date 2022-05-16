@@ -79,4 +79,14 @@ describe('Test Pokedex', () => {
 
     expect(screen.getByText(/Rapidash/i)).toBeInTheDocument();
   });
+
+  test('05- ', () => {
+    renderWithRouter(<Pokedex
+      pokemons={ pokemons }
+      isPokemonFavoriteById={ favoritedPokemons }
+    />);
+    const buttonAll = screen.getByRole('button', { name: /all/i });
+    userEvent.click(buttonAll);
+    expect(screen.getByText(/pikachu/i)).toBeInTheDocument();
+  });
 });
