@@ -50,7 +50,7 @@ describe('Test Pokedex', () => {
   //   expect(pokemonName.length).toBe(1);
   // });
 
-  test('03- ', () => {
+  test('03- Check if the filter buttons exist', () => {
     renderWithRouter(<Pokedex
       pokemons={ pokemons }
       isPokemonFavoriteById={ favoritedPokemons }
@@ -59,5 +59,7 @@ describe('Test Pokedex', () => {
       const filterButton = screen.getByRole('button', { name: type });
       expect(filterButton).toBeInTheDocument();
     });
+    const ButtonAll = screen.getByRole('button', { name: /all/i });
+    expect(ButtonAll).toBeInTheDocument();
   });
 });
