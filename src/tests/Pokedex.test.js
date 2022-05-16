@@ -10,6 +10,16 @@ const favoritedPokemons = pokemons.reduce((acc, { id }) => {
   return acc;
 }, {});
 
+const types = [
+  'Electric',
+  'Fire',
+  'Bug',
+  'Poison',
+  'Psychic',
+  'Normal',
+  'Dragon',
+];
+
 describe('Test Pokedex', () => {
   test('01- Checks if the component has the correct title', () => {
     renderWithRouter(<Pokedex
@@ -19,5 +29,35 @@ describe('Test Pokedex', () => {
     const title = screen.getByRole('heading',
       { level: 2, name: /Encountered pokémons/i });
     expect(title).toBeInTheDocument();
+  });
+
+  test('02- Check "Proximo Pokemon" button', () => {
+    renderWithRouter(<Pokedex
+      pokemons={ pokemons }
+      isPokemonFavoriteById={ favoritedPokemons }
+    />);
+    const nextButton = screen.getByRole('button', { name: /próximo pokémon/i });
+    pokemons.forEach(({ name }) => {
+      expect(screen.getByText(name)).toBeInTheDocument();
+      userEvent.click(nextButton);
+    });
+    const firstPokemon = screen.getByText(pokemons[0].name);
+    expect(firstPokemon).toBeInTheDocument();
+  });
+
+  // test('03- ', () => {
+  //   const pokemonName = screen.getAllByTestId('pokemon-name');
+  //   expect(pokemonName.length).toBe(1);
+  // });
+
+  test('03- ', () => {
+    renderWithRouter(<Pokedex
+      pokemons={ pokemons }
+      isPokemonFavoriteById={ favoritedPokemons }
+    />);
+    types.forEach((type) => {
+      const filterButton = screen.getByRole('button', { name: type });
+      expect(filterButton).toBeInTheDocument();
+    });
   });
 });
