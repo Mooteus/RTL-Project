@@ -4,32 +4,32 @@ import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import App from '../App';
 
-const LINK_TEXTS = ['Home', 'About', 'Favorite Pokémons'];
-const LINK_PATH = ['/', '/about', '/favorites'];
+const linkTexts = ['Home', 'About', 'Favorite Pokémons'];
+const linkPath = ['/', '/about', '/favorites'];
 
 describe('Test App.js', () => {
   test('01- Checks if the links have the correct text', () => {
     renderWithRouter(<App />);
-    const LINKS = screen.getAllByRole('link');
-    LINK_TEXTS.forEach((text, i) => {
-      expect(LINKS[i]).toHaveTextContent(text);
+    const link = screen.getAllByRole('link');
+    linkTexts.forEach((text, i) => {
+      expect(link[i]).toHaveTextContent(text);
     });
   });
 
-  LINK_TEXTS.forEach((text, i) => {
+  linkTexts.forEach((text, i) => {
     test(`0${i + 2}- Check if the ${text} redict is correct`, () => {
       const { history } = renderWithRouter(<App />);
-      const LINK = screen.getByRole('link', { name: text });
-      userEvent.click(LINK);
+      const link = screen.getByRole('link', { name: text });
+      userEvent.click(link);
       const { pathname } = history.location;
-      expect(pathname).toBe(LINK_PATH[i]);
+      expect(pathname).toBe(linkPath[i]);
     });
   });
 
   test('05- Check if the not found page works', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/GEN98');
-    const notFoundText = screen.getByText(/Page requested not found/);
+    const notFoundText = screen.getByText(/Page requested not found/i);
     expect(notFoundText).toBeInTheDocument();
   });
 });
