@@ -55,6 +55,11 @@ describe('Test Pokedex', () => {
       pokemons={ pokemons }
       isPokemonFavoriteById={ favoritedPokemons }
     />);
+
+    const maxLength = 7;
+    const Buttons = screen.getAllByTestId('pokemon-type-button');
+    expect(Buttons.length).toBe(maxLength);
+
     types.forEach((type) => {
       const filterButton = screen.getByRole('button', { name: type });
       expect(filterButton).toBeInTheDocument();
@@ -80,7 +85,7 @@ describe('Test Pokedex', () => {
     expect(screen.getByText(/Rapidash/i)).toBeInTheDocument();
   });
 
-  test('05- ', () => {
+  test('05- Check filter reset button', () => {
     renderWithRouter(<Pokedex
       pokemons={ pokemons }
       isPokemonFavoriteById={ favoritedPokemons }
