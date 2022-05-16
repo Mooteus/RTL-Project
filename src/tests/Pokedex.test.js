@@ -62,4 +62,21 @@ describe('Test Pokedex', () => {
     const ButtonAll = screen.getByRole('button', { name: /all/i });
     expect(ButtonAll).toBeInTheDocument();
   });
+
+  test('04- Checks if the filter is working', () => {
+    renderWithRouter(<Pokedex
+      pokemons={ pokemons }
+      isPokemonFavoriteById={ favoritedPokemons }
+    />);
+    const ButtonType = screen.getByRole('button', { name: /fire/i });
+    userEvent.click(ButtonType);
+
+    const pokemonName = screen.getByText(/charmander/i);
+    expect(pokemonName).toBeInTheDocument();
+
+    const nextButton = screen.getByRole('button', { name: /próximo pokémon/i });
+    userEvent.click(nextButton);
+
+    expect(screen.getByText(/Rapidash/i)).toBeInTheDocument();
+  });
 });
