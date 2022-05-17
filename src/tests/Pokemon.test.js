@@ -30,8 +30,12 @@ describe('Test Pokemon', () => {
       name: screen.getByText(/mew/i),
       type: screen.getByText(/psychic/i),
       weight: screen.getByText(/average weight: 4.0 kg/i),
+      img: screen.getByRole('img', { name: /mew sprite/i }),
     };
-    const { name, type, weight } = pokeInfo;
+    const { name, type, weight, img } = pokeInfo;
     expect(name && type && weight).toBeInTheDocument();
+
+    const { image } = pokeData.pokemon;
+    expect(img.src).toBe(image);
   });
 });
