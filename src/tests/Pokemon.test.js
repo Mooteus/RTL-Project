@@ -52,4 +52,10 @@ describe('Test Pokemon', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/pokemons/151');
   });
+
+  test('03- checks if the page has the favorite icon', () => {
+    renderWithRouter(<Pokemon pokemon={ pokeData.pokemon } isFavorite />);
+    const favoritedPoke = screen.getByRole('img', { name: /mew is marked as favorite/i });
+    expect(favoritedPoke.src).toContain('/star-icon.svg');
+  });
 });
