@@ -24,10 +24,12 @@ const foundAt = [
   },
 ];
 
+const historyPath = '/pokemons/10';
+
 describe('Test PokemonDetais', () => {
   test('01- Checks if the detailed information of pokemon is shown', () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/pokemons/10');
+    history.push(historyPath);
 
     const pokeName = screen.getByText(/caterpie details/i);
     const linkDetails = screen.queryByRole('link', { name: /more details/i });
@@ -40,7 +42,7 @@ describe('Test PokemonDetais', () => {
 
   test('02- Checks Routes map', () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/pokemons/10');
+    history.push(historyPath);
 
     const routes = screen.getAllByRole('img', { name: /caterpie location/i });
     routes.forEach(({ src }, i) => {
@@ -58,7 +60,7 @@ describe('Test PokemonDetais', () => {
 
   test('03- Checks the favorite checkbox', () => {
     const { history } = renderWithRouter(<App />);
-    history.push('/pokemons/10');
+    history.push(historyPath);
 
     const favoriteCheckbox = screen.getByRole('checkbox');
     userEvent.click(favoriteCheckbox);
