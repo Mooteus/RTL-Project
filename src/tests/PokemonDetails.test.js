@@ -45,6 +45,8 @@ describe('Test PokemonDetais', () => {
     const routes = screen.getAllByRole('img', { name: /caterpie location/i });
     routes.forEach(({ src }, i) => {
       expect(src).toBe(foundAt[i].map);
+      const mapName = screen.getByText(foundAt[i].location);
+      expect(mapName).toBeInTheDocument();
     });
 
     const locationTitle = screen.getByRole('heading', {
