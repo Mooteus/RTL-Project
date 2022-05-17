@@ -55,4 +55,23 @@ describe('Test PokemonDetais', () => {
     });
     expect(locationTitle).toBeInTheDocument();
   });
+
+  test('03- Checks the favorite checkbox', () => {
+    const { history } = renderWithRouter(<App />);
+    history.push('/pokemons/10');
+
+    const favoriteCheckbox = screen.getByRole('checkbox');
+    userEvent.click(favoriteCheckbox);
+
+    const starImg = screen.queryByRole('img', {
+      name: /Caterpie is marked as favorite/i,
+    });
+    expect(starImg).toBeInTheDocument();
+
+    userEvent.click(favoriteCheckbox);
+    expect(starImg).not.toBeInTheDocument();
+
+    const checkboxTitle = screen.getByText(/Pokémon favoritado?/i);
+    expect(checkboxTitle).toBeInTheDocument();
+  });
 });
