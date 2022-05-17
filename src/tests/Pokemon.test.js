@@ -1,1 +1,37 @@
-test('', () => {});
+import React from 'react';
+import { screen } from '@testing-library/react';
+import renderWithRouter from './renderWithRouter';
+import Pokemon from '../components/Pokemon';
+
+const pokeData = {
+  pokemon: {
+    id: 151,
+    name: 'Mew',
+    type: 'Psychic',
+    averageWeight: {
+      value: '4.0',
+      measurementUnit: 'kg',
+    },
+    image: 'https://cdn2.bulbagarden.net/upload/4/43/Spr_5b_151.png',
+    moreInfo: 'https://bulbapedia.bulbagarden.net/wiki/Mew_(Pok%C3%A9mon)',
+    foundAt: [
+      {
+        location: 'Faraway Island',
+        map: 'https://cdn2.bulbagarden.net/upload/e/e4/Hoenn_Faraway_Island_Map.png',
+      },
+    ],
+  },
+};
+
+describe('Test Pokemon', () => {
+  test('01- Checks if the correct pokemon information is displayed', () => {
+    renderWithRouter(<Pokemon pokemon={ pokeData.pokemon } isFavorite={ false } />);
+    const pokeInfo = {
+      name: screen.getByText(/mew/i),
+      type: screen.getByText(/psychic/i),
+      weight: screen.getByText(/average weight: 4.0 kg/i),
+    };
+    const { name, type, weight } = pokeInfo;
+    expect(name && type && weight).toBeInTheDocument();
+  });
+});
