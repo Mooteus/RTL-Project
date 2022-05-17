@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import Pokemon from '../components/Pokemon';
 
@@ -37,5 +38,18 @@ describe('Test Pokemon', () => {
 
     const { image } = pokeData.pokemon;
     expect(img.src).toBe(image);
+  });
+
+  test('02- Checks if the details link is correct', () => {
+    const { history } = renderWithRouter(
+      <Pokemon
+        pokemon={ pokeData.pokemon }
+        isFavorite={ false }
+      />,
+    );
+    const link = screen.getByRole('link');
+    userEvent.click(link);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/pokemons/151');
   });
 });
